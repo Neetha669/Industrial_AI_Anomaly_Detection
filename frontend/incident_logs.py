@@ -28,11 +28,17 @@ if PROJECT_ROOT not in sys.path:
 
 try:
 
-    from incident_manager import IncidentManager
+    from backend.incident_manager import IncidentManager
 
 except ImportError:
 
-    IncidentManager = None
+    try:
+
+        from incident_manager import IncidentManager
+
+    except ImportError:
+
+        IncidentManager = None
 
 
 # ============================================================
@@ -45,26 +51,71 @@ class IncidentLogs:
 
         self.parent = parent
 
-        # ----------------------------------------------------
-        # USE CENTRAL INCIDENT MANAGER
-        # ----------------------------------------------------
+        # ====================================================
+        # INCIDENT MANAGER
+        # ====================================================
 
         if IncidentManager is not None:
 
-            self.manager = IncidentManager()
+            try:
+
+                self.manager = IncidentManager()
+
+                print("========================================")
+                print("INCIDENT LOGS - MANAGER INITIALIZED")
+                print(
+                    "INCIDENT FILE USED BY GUI:"
+                )
+                print(
+                    self.manager.incident_file
+                )
+                print("========================================")
+
+            except Exception as error:
+
+                print(
+                    "IncidentManager initialization error:",
+                    error
+                )
+
+                self.manager = None
 
         else:
 
+            print(
+                "ERROR: IncidentManager could not be imported."
+            )
+
             self.manager = None
+
+        # ====================================================
+        # INCIDENT DATA
+        # ====================================================
 
         self.logs = []
 
+        # ====================================================
+        # AUTO REFRESH ID
+        # ====================================================
+
+        self.refresh_id = None
+
+        # ====================================================
+        # CREATE UI
+        # ====================================================
+
         self.create_ui()
 
-        # Load existing incidents
+        # ====================================================
+        # LOAD EXISTING INCIDENTS
+        # ====================================================
+
         self.load_incidents()
 
-        # Keep checking for new incidents
+        # ====================================================
+        # START AUTO REFRESH
+        # ====================================================
+
         self.auto_refresh()
 
 
@@ -127,7 +178,7 @@ class IncidentLogs:
         )
 
         # ====================================================
-        # LOG TABLE
+        # LOG FRAME
         # ====================================================
 
         log_frame = tk.Frame(
@@ -142,9 +193,9 @@ class IncidentLogs:
             expand=True
         )
 
-        # ----------------------------------------------------
+        # ====================================================
         # HEADER
-        # ----------------------------------------------------
+        # ====================================================
 
         header = tk.Frame(
             log_frame,
@@ -160,21 +211,29 @@ class IncidentLogs:
         tk.Label(
             header,
             text="INCIDENT HISTORY",
-            font=("Arial", 15, "bold"),
+            font=(
+                "Arial",
+                15,
+                "bold"
+            ),
             bg="white",
             fg="#172033"
         ).pack(
             side="left"
         )
 
-        # ----------------------------------------------------
+        # ====================================================
         # REFRESH BUTTON
-        # ----------------------------------------------------
+        # ====================================================
 
         tk.Button(
             header,
             text="REFRESH",
-            font=("Arial", 9, "bold"),
+            font=(
+                "Arial",
+                9,
+                "bold"
+            ),
             bg="#E8F0FE",
             fg="#2563EB",
             relief="flat",
@@ -185,14 +244,18 @@ class IncidentLogs:
             padx=5
         )
 
-        # ----------------------------------------------------
+        # ====================================================
         # CLEAR BUTTON
-        # ----------------------------------------------------
+        # ====================================================
 
         tk.Button(
             header,
             text="CLEAR LOGS",
-            font=("Arial", 9, "bold"),
+            font=(
+                "Arial",
+                9,
+                "bold"
+            ),
             bg="#F1F5F9",
             fg="#475569",
             relief="flat",
@@ -277,7 +340,10 @@ class IncidentLogs:
                 "Incident logs contain safety events detected "
                 "by the AI and sensor monitoring system."
             ),
-            font=("Arial", 8),
+            font=(
+                "Arial",
+                8
+            ),
             bg="#EEF2F7",
             fg="#94A3B8"
         ).pack(
@@ -317,7 +383,11 @@ class IncidentLogs:
         tk.Label(
             card,
             text=title,
-            font=("Arial", 9, "bold"),
+            font=(
+                "Arial",
+                9,
+                "bold"
+            ),
             bg="white",
             fg="#64748B"
         ).pack(
@@ -329,7 +399,11 @@ class IncidentLogs:
         label = tk.Label(
             card,
             text=value,
-            font=("Arial", 16, "bold"),
+            font=(
+                "Arial",
+                16,
+                "bold"
+            ),
             bg="white",
             fg=color
         )
@@ -343,12 +417,20 @@ class IncidentLogs:
 
 
     # ========================================================
-    # LOAD INCIDENTS FROM INCIDENT MANAGER
+    # LOAD INCIDENTS
     # ========================================================
 
     def load_incidents(self):
 
+        # ====================================================
+        # CHECK MANAGER
+        # ====================================================
+
         if self.manager is None:
+
+            print(
+                "ERROR: IncidentManager is not available."
+            )
 
             self.logs = []
 
@@ -356,24 +438,69 @@ class IncidentLogs:
 
             return
 
+        # ====================================================
+        # LOAD FROM INCIDENT MANAGER
+        # ====================================================
+
         try:
 
-            self.logs = self.manager.get_logs()
+            self.logs = self.manager.get_incidents()
+
+            if self.logs is None:
+
+                self.logs = []
+
+            print("========================================")
+            print("INCIDENT LOGS LOADED")
+            print(
+                "FILE:",
+                self.manager.incident_file
+            )
+            print(
+                "NUMBER OF INCIDENTS:",
+                len(self.logs)
+            )
+
+            if self.logs:
+
+                print(
+                    "LATEST INCIDENT:"
+                )
+
+                print(
+                    self.logs[0]
+                )
+
+            else:
+
+                print(
+                    "INCIDENT DATA IS EMPTY."
+                )
+
+            print("========================================")
 
         except Exception as error:
 
+            print("========================================")
             print(
-                "Unable to load incidents:",
+                "ERROR LOADING INCIDENTS:"
+            )
+            print(
                 error
             )
+            print("========================================")
 
             self.logs = []
+
+        # ====================================================
+        # REFRESH GUI
+        # ====================================================
 
         self.refresh_logs()
 
 
     # ========================================================
-    # TABLE HEADER
+    # CREATE TABLE HEADER
     # ========================================================
 
     def create_table_header(self):
@@ -401,7 +528,11 @@ class IncidentLogs:
             tk.Label(
                 header,
                 text=text,
-                font=("Arial", 8, "bold"),
+                font=(
+                    "Arial",
+                    8,
+                    "bold"
+                ),
                 bg="#E2E8F0",
                 fg="#475569",
                 width=width,
@@ -419,26 +550,33 @@ class IncidentLogs:
 
     def refresh_logs(self):
 
-        # Remove existing table rows
+        # ====================================================
+        # REMOVE OLD ROWS
+        # ====================================================
 
         for widget in self.table.winfo_children():
 
             widget.destroy()
 
-        # Recreate header
+        # ====================================================
+        # TABLE HEADER
+        # ====================================================
 
         self.create_table_header()
 
-        # ----------------------------------------------------
+        # ====================================================
         # NO INCIDENTS
-        # ----------------------------------------------------
+        # ====================================================
 
         if not self.logs:
 
             tk.Label(
                 self.table,
                 text="No incidents recorded",
-                font=("Arial", 10),
+                font=(
+                    "Arial",
+                    10
+                ),
                 bg="#F8FAFC",
                 fg="#94A3B8"
             ).pack(
@@ -449,15 +587,24 @@ class IncidentLogs:
 
             return
 
-        # ----------------------------------------------------
+        # ====================================================
         # DISPLAY INCIDENTS
-        # ----------------------------------------------------
+        # ====================================================
 
         for incident in self.logs:
 
-            self.create_log_row(
-                incident
-            )
+            if isinstance(
+                incident,
+                dict
+            ):
+
+                self.create_log_row(
+                    incident
+                )
+
+        # ====================================================
+        # UPDATE SUMMARY
+        # ====================================================
 
         self.update_summary()
 
@@ -482,14 +629,20 @@ class IncidentLogs:
             fill="x"
         )
 
-        incident_type = incident.get(
-            "type",
-            "UNKNOWN"
+        # ====================================================
+        # INCIDENT TYPE
+        # ====================================================
+
+        incident_type = str(
+            incident.get(
+                "type",
+                "UNKNOWN"
+            )
         )
 
-        # ----------------------------------------------------
+        # ====================================================
         # TYPE COLOR
-        # ----------------------------------------------------
+        # ====================================================
 
         if incident_type == "FALL":
 
@@ -506,13 +659,17 @@ class IncidentLogs:
 
             color = "#F59E0B"
 
+        elif incident_type == "ANOMALY":
+
+            color = "#F59E0B"
+
         else:
 
             color = "#2563EB"
 
-        # ----------------------------------------------------
+        # ====================================================
         # VALUES
-        # ----------------------------------------------------
+        # ====================================================
 
         values = [
 
@@ -553,9 +710,9 @@ class IncidentLogs:
             15
         ]
 
-        # ----------------------------------------------------
+        # ====================================================
         # CREATE COLUMNS
-        # ----------------------------------------------------
+        # ====================================================
 
         for index, value in enumerate(values):
 
@@ -565,15 +722,19 @@ class IncidentLogs:
                 else "#475569"
             )
 
+            font_style = (
+                "bold"
+                if index == 2
+                else "normal"
+            )
+
             tk.Label(
                 row,
-                text=value,
+                text=str(value),
                 font=(
                     "Arial",
                     8,
-                    "bold"
-                    if index == 2
-                    else "normal"
+                    font_style
                 ),
                 bg="white",
                 fg=fg,
@@ -592,51 +753,53 @@ class IncidentLogs:
 
     def update_summary(self):
 
-        if self.manager is None:
+        total = len(
+            self.logs
+        )
 
-            total = 0
-            falls = 0
-            danger = 0
-            sensor = 0
+        # ====================================================
+        # FALL INCIDENTS
+        # ====================================================
 
-        else:
+        falls = sum(
+            1
+            for incident in self.logs
+            if incident.get(
+                "type"
+            ) == "FALL"
+        )
 
-            try:
+        # ====================================================
+        # DANGER ZONE INCIDENTS
+        # ====================================================
 
-                statistics = (
-                    self.manager.get_statistics()
-                )
+        danger = sum(
+            1
+            for incident in self.logs
+            if incident.get(
+                "type"
+            ) == "DANGER ZONE"
+        )
 
-                total = statistics.get(
-                    "total",
-                    0
-                )
+        # ====================================================
+        # SENSOR / ANOMALY ALERTS
+        # ====================================================
 
-                falls = statistics.get(
-                    "falls",
-                    0
-                )
+        sensor = sum(
+            1
+            for incident in self.logs
+            if incident.get(
+                "type"
+            ) in [
+                "TEMPERATURE",
+                "VIBRATION",
+                "ANOMALY"
+            ]
+        )
 
-                danger = statistics.get(
-                    "danger",
-                    0
-                )
-
-                sensor = statistics.get(
-                    "sensor",
-                    0
-                )
-
-            except Exception:
-
-                total = 0
-                falls = 0
-                danger = 0
-                sensor = 0
-
-        # ----------------------------------------------------
+        # ====================================================
         # UPDATE CARDS
-        # ----------------------------------------------------
+        # ====================================================
 
         self.total_card.config(
             text=str(total)
@@ -665,7 +828,20 @@ class IncidentLogs:
 
             return
 
-        self.manager.clear_logs()
+        try:
+
+            self.manager.clear_incidents()
+
+            print(
+                "Incident logs cleared."
+            )
+
+        except Exception as error:
+
+            print(
+                "Error clearing incident logs:",
+                error
+            )
 
         self.load_incidents()
 
@@ -680,19 +856,20 @@ class IncidentLogs:
 
             if self.page.winfo_exists():
 
-                # Read latest_status.json
-                # and create new incidents if required
-                if self.manager is not None:
-                    self.manager.check_for_incidents()
+                # Reload incident history
 
-                # Load incident_logs.json
                 self.load_incidents()
 
-                # Check again after 2 seconds
-                self.page.after(
+                # Check every 2 seconds
+
+                self.refresh_id = self.page.after(
                     2000,
                     self.auto_refresh
                 )
+
+        except tk.TclError:
+
+            pass
 
         except Exception as error:
 
@@ -700,15 +877,41 @@ class IncidentLogs:
                 "Incident auto refresh error:",
                 error
             )
+
+
     # ========================================================
     # CLEANUP
     # ========================================================
 
     def destroy(self):
 
+        # ====================================================
+        # CANCEL AUTO REFRESH
+        # ====================================================
+
         try:
 
-            self.page.destroy()
+            if self.refresh_id is not None:
+
+                self.page.after_cancel(
+                    self.refresh_id
+                )
+
+                self.refresh_id = None
+
+        except Exception:
+
+            pass
+
+        # ====================================================
+        # DESTROY PAGE
+        # ====================================================
+
+        try:
+
+            if self.page.winfo_exists():
+
+                self.page.destroy()
 
         except Exception:
 

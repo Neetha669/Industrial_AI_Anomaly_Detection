@@ -1,5 +1,4 @@
 import tkinter as tk
-
 import cv2
 import os
 import sys
@@ -9,6 +8,7 @@ from PIL import Image, ImageTk
 
 from datetime import datetime
 
+from backend.incident_manager import IncidentManager
 
 # ============================================================
 # PROJECT ROOT
@@ -174,6 +174,8 @@ class LiveMonitoring:
         self.detector = None
 
         self.anomaly_detector = None
+
+        self.incident_manager = IncidentManager()
 
         # ====================================================
         # PREVIOUS STATES
@@ -1873,6 +1875,25 @@ class LiveMonitoring:
                 )
         }
 
+        # ====================================================
+        # SEND STATUS TO INCIDENT MANAGER
+        # ====================================================
+
+        try:
+
+            self.incident_manager.process_status(
+                latest_data
+            )
+
+        except Exception as e:
+
+            print(
+                f"Incident manager error: {e}"
+            )
+
+        # ====================================================
+        # SAVE STATUS JSON
+        # ====================================================   
         try:
 
             with open(
