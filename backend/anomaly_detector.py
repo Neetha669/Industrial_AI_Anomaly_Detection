@@ -1,7 +1,3 @@
-# ============================================================
-# backend/anomaly_detector.py
-# ============================================================
-
 import numpy as np
 from sklearn.ensemble import IsolationForest
 
@@ -24,6 +20,7 @@ class AnomalyDetector:
 
         self.is_trained = False
 
+        # Number of normal frames used for learning
         self.training_frames = 100
 
         self.frame_count = 0
@@ -36,7 +33,10 @@ class AnomalyDetector:
     # EXTRACT FEATURES
     # ========================================================
 
-    def extract_features(self, landmarks):
+    def extract_features(
+        self,
+        landmarks
+    ):
 
         if landmarks is None:
             return None
@@ -123,7 +123,10 @@ class AnomalyDetector:
     # TRAIN
     # ========================================================
 
-    def train_step(self, features):
+    def train_step(
+        self,
+        features
+    ):
 
         if features is None:
             return False
@@ -143,13 +146,17 @@ class AnomalyDetector:
             self.training_frames
         ):
 
-            if len(self.training_data) >= 20:
+            if len(
+                self.training_data
+            ) >= 20:
 
                 X = np.array(
                     self.training_data
                 )
 
-                self.model.fit(X)
+                self.model.fit(
+                    X
+                )
 
                 self.is_trained = True
 
@@ -165,7 +172,10 @@ class AnomalyDetector:
     # DETECT
     # ========================================================
 
-    def detect(self, features):
+    def detect(
+        self,
+        features
+    ):
 
         if features is None:
 
@@ -196,7 +206,10 @@ class AnomalyDetector:
         try:
 
             prediction = self.model.predict(
-                features.reshape(1, -1)
+                features.reshape(
+                    1,
+                    -1
+                )
             )
 
             if prediction[0] == -1:

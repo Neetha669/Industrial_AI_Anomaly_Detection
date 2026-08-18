@@ -1,16 +1,16 @@
 {
     "system": "ONLINE",
-    "worker": true,
-    "danger": true,
+    "worker": false,
+    "danger": false,
     "hand_danger": false,
-    "body_danger": true,
+    "body_danger": false,
     "fall": true,
-    "anomaly": false,
-    "anomaly_status": "NO POSE",
+    "anomaly": true,
+    "anomaly_status": "ANOMALY",
     "risk_level": "HIGH",
     "status": "FALL DETECTED",
-    "message": "Worker fall detected",
-    "latest_anomaly_image": "",
+    "message": "Industrial anomaly detected",
+    "latest_anomaly_image": "D:\\Industrial_AI_Anomaly_Detection\\data\\latest_anomaly.jpg",
     "latest_danger_image": "D:\\Industrial_AI_Anomaly_Detection\\data\\latest_danger.jpg",
-    "time": "17-08-2026 11:12:23 AM"
+    "time": "17-08-2026 04:35:49 PM"
 }
