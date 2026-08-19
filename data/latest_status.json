@@ -1,9 +1,9 @@
 {
     "system": "ONLINE",
     "worker": true,
-    "danger": false,
+    "danger": true,
     "hand_danger": false,
-    "body_danger": false,
+    "body_danger": true,
     "fall": true,
     "anomaly": true,
     "anomaly_status": "ANOMALY",
@@ -12,5 +12,5 @@
     "message": "Industrial anomaly detected",
     "latest_anomaly_image": "D:\\Industrial_AI_Anomaly_Detection\\data\\latest_anomaly.jpg",
     "latest_danger_image": "D:\\Industrial_AI_Anomaly_Detection\\data\\latest_danger.jpg",
-    "time": "18-08-2026 09:00:59 PM"
+    "time": "19-08-2026 02:21:03 PM"
 }
