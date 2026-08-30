@@ -1,7 +1,16 @@
+# backend/yolo_detector.py
+
 import os
 import cv2
 import mediapipe as mp
+
 from ultralytics import YOLO
+
+from backend.danger_zone import (
+    get_danger_zone,
+    check_person_in_danger_zone,
+    draw_danger_zone
+)
 
 
 class YOLODetector:
@@ -10,7 +19,19 @@ class YOLODetector:
     # INITIALIZATION
     # ==========================================================
 
-    def __init__(self, model_path=None):
+    def __init__(
+        self,
+        model_path=None,
+        enable_danger_zone=False,
+        video_mode="video1"
+    ):
+
+        self.enable_danger_zone = enable_danger_zone
+        self.video_mode = video_mode
+
+        # ------------------------------------------------------
+        # PROJECT ROOT
+        # ------------------------------------------------------
 
         current_dir = os.path.dirname(
             os.path.abspath(__file__)
@@ -20,9 +41,9 @@ class YOLODetector:
             current_dir
         )
 
-        # ======================================================
-        # YOLO MODEL PATH
-        # ======================================================
+        # ------------------------------------------------------
+        # YOLO MODEL
+        # ------------------------------------------------------
 
         if model_path is None:
 
@@ -35,7 +56,8 @@ class YOLODetector:
         if not os.path.exists(model_path):
 
             raise FileNotFoundError(
-                f"YOLO model not found:\n{model_path}"
+                "YOLO model not found:\n"
+                f"{model_path}"
             )
 
         print("Loading YOLO model...")
@@ -93,42 +115,10 @@ class YOLODetector:
         self.body_in_danger = False
 
         # ======================================================
-        # DANGER ZONE
-        # ======================================================
-        #
-        # These values are normalized coordinates.
-        #
-        # x1 = 30% of width
-        # y1 = 65% of height
-        # x2 = 70% of width
-        # y2 = 95% of height
-        #
-        # You can change these later.
-        #
+        # PERSON VALIDATION
         # ======================================================
 
-        self.danger_zone = {
-
-            "x1": 0.30,
-            "y1": 0.65,
-
-            "x2": 0.70,
-            "y2": 0.95
-        }
-
-        # ======================================================
-        # PERSON VALIDATION SETTINGS
-        # ======================================================
-
-        # Minimum number of pose landmarks that should
-        # appear inside a YOLO person bounding box.
-
-        self.minimum_pose_landmarks = 3
-
-        # Important human body landmarks.
-        #
-        # These are used to verify that the detected object
-        # actually looks like a human body.
+        self.minimum_pose_landmarks = 5
 
         self.required_pose_landmarks = [
 
@@ -150,77 +140,9 @@ class YOLODetector:
             self.mp_pose.PoseLandmark.RIGHT_ANKLE
         ]
 
-    # ==========================================================
-    # GET DANGER ZONE
-    # ==========================================================
-
-    def get_danger_zone(
-        self,
-        width,
-        height
-    ):
-
-        x1 = int(
-            width *
-            self.danger_zone["x1"]
-        )
-
-        y1 = int(
-            height *
-            self.danger_zone["y1"]
-        )
-
-        x2 = int(
-            width *
-            self.danger_zone["x2"]
-        )
-
-        y2 = int(
-            height *
-            self.danger_zone["y2"]
-        )
-
-        return (
-            x1,
-            y1,
-            x2,
-            y2
-        )
 
     # ==========================================================
-    # POINT INSIDE DANGER ZONE
-    # ==========================================================
-
-    def point_inside_zone(
-        self,
-        x,
-        y,
-        zone
-    ):
-
-        x1, y1, x2, y2 = zone
-
-        return (
-            x1 <= x <= x2
-            and
-            y1 <= y <= y2
-        )
-
-    # ==========================================================
-    # CHECK WHETHER YOLO BOX IS REALLY A PERSON
-    # ==========================================================
-    #
-    # This is the IMPORTANT new function.
-    #
-    # YOLO sometimes detects machines/robots as PERSON.
-    #
-    # We use MediaPipe Pose to verify the YOLO detection.
-    #
-    # If enough human body landmarks are found inside the
-    # YOLO bounding box -> accept as person.
-    #
-    # Otherwise -> reject the YOLO detection.
-    #
+    # CHECK REAL PERSON
     # ==========================================================
 
     def is_real_person(
@@ -232,7 +154,6 @@ class YOLODetector:
     ):
 
         if pose_landmarks is None:
-
             return False
 
         bx1 = box["x1"]
@@ -240,10 +161,17 @@ class YOLODetector:
         bx2 = box["x2"]
         by2 = box["y2"]
 
+        box_width = bx2 - bx1
+        box_height = by2 - by1
+
+        if box_width <= 0 or box_height <= 0:
+            return False
+
         valid_landmarks = 0
+        visible_landmarks = []
 
         # ------------------------------------------------------
-        # CHECK HUMAN BODY LANDMARKS
+        # CHECK POSE LANDMARKS
         # ------------------------------------------------------
 
         for landmark_id in self.required_pose_landmarks:
@@ -252,9 +180,7 @@ class YOLODetector:
                 landmark_id
             ]
 
-            # Ignore landmarks with very low visibility.
-
-            if landmark.visibility < 0.35:
+            if landmark.visibility < 0.50:
                 continue
 
             lx = int(
@@ -265,9 +191,9 @@ class YOLODetector:
                 landmark.y * height
             )
 
-            # --------------------------------------------------
-            # CHECK WHETHER LANDMARK IS INSIDE YOLO BOX
-            # --------------------------------------------------
+            visible_landmarks.append(
+                (lx, ly)
+            )
 
             if (
                 bx1 <= lx <= bx2
@@ -278,18 +204,89 @@ class YOLODetector:
                 valid_landmarks += 1
 
         # ------------------------------------------------------
-        # HUMAN CONFIRMATION
+        # NOT ENOUGH HUMAN LANDMARKS
         # ------------------------------------------------------
 
-        if (
-            valid_landmarks
-            >=
-            self.minimum_pose_landmarks
-        ):
+        if len(visible_landmarks) < 5:
+            return False
 
-            return True
+        if valid_landmarks < self.minimum_pose_landmarks:
+            return False
 
-        return False
+        # ------------------------------------------------------
+        # CREATE POSE BOX
+        # ------------------------------------------------------
+
+        pose_xs = [
+            point[0]
+            for point in visible_landmarks
+        ]
+
+        pose_ys = [
+            point[1]
+            for point in visible_landmarks
+        ]
+
+        pose_x1 = min(pose_xs)
+        pose_y1 = min(pose_ys)
+
+        pose_x2 = max(pose_xs)
+        pose_y2 = max(pose_ys)
+
+        pose_width = pose_x2 - pose_x1
+        pose_height = pose_y2 - pose_y1
+
+        if pose_width <= 0 or pose_height <= 0:
+            return False
+
+        # ------------------------------------------------------
+        # CENTER CHECK
+        # ------------------------------------------------------
+
+        box_center_x = (
+            bx1 + bx2
+        ) / 2
+
+        box_center_y = (
+            by1 + by2
+        ) / 2
+
+        pose_center_x = (
+            pose_x1 + pose_x2
+        ) / 2
+
+        pose_center_y = (
+            pose_y1 + pose_y2
+        ) / 2
+
+        center_distance_x = abs(
+            box_center_x -
+            pose_center_x
+        )
+
+        center_distance_y = abs(
+            box_center_y -
+            pose_center_y
+        )
+
+        if center_distance_x > box_width * 0.50:
+            return False
+
+        if center_distance_y > box_height * 0.50:
+            return False
+
+        # ------------------------------------------------------
+        # SIZE CHECK
+        # ------------------------------------------------------
+
+        if box_width > pose_width * 2.5:
+            return False
+
+        if box_height > pose_height * 2.5:
+            return False
+
+        return True
+
 
     # ==========================================================
     # IOU
@@ -359,13 +356,13 @@ class YOLODetector:
         )
 
         if union_area <= 0:
-
             return 0.0
 
         return (
             intersection_area /
             union_area
         )
+
 
     # ==========================================================
     # REMOVE DUPLICATE PERSON BOXES
@@ -376,13 +373,15 @@ class YOLODetector:
         persons
     ):
 
-        if len(persons) <= 1:
-
+        if not persons or len(persons) <= 1:
             return persons
+
+        # Highest confidence first
 
         persons = sorted(
             persons,
-            key=lambda p: p["confidence"],
+            key=lambda person:
+                person["confidence"],
             reverse=True
         )
 
@@ -390,7 +389,7 @@ class YOLODetector:
 
         for person in persons:
 
-            duplicate = False
+            is_duplicate = False
 
             for existing in filtered:
 
@@ -401,16 +400,116 @@ class YOLODetector:
 
                 if iou > 0.50:
 
-                    duplicate = True
+                    is_duplicate = True
                     break
 
-            if not duplicate:
+            if not is_duplicate:
 
                 filtered.append(
                     person
                 )
 
         return filtered
+
+
+    # ==========================================================
+    # FALL DETECTION
+    # ==========================================================
+
+    def detect_fall(
+        self,
+        landmarks
+    ):
+
+        if landmarks is None:
+            return False
+
+        left_shoulder = landmarks[
+            self.mp_pose.PoseLandmark.LEFT_SHOULDER
+        ]
+
+        right_shoulder = landmarks[
+            self.mp_pose.PoseLandmark.RIGHT_SHOULDER
+        ]
+
+        left_hip = landmarks[
+            self.mp_pose.PoseLandmark.LEFT_HIP
+        ]
+
+        right_hip = landmarks[
+            self.mp_pose.PoseLandmark.RIGHT_HIP
+        ]
+
+        # ------------------------------------------------------
+        # VISIBILITY
+        # ------------------------------------------------------
+
+        if not (
+            left_shoulder.visibility > 0.4
+            and
+            right_shoulder.visibility > 0.4
+            and
+            left_hip.visibility > 0.4
+            and
+            right_hip.visibility > 0.4
+        ):
+
+            return False
+
+        # ------------------------------------------------------
+        # SHOULDER CENTER
+        # ------------------------------------------------------
+
+        shoulder_x = (
+            left_shoulder.x +
+            right_shoulder.x
+        ) / 2
+
+        shoulder_y = (
+            left_shoulder.y +
+            right_shoulder.y
+        ) / 2
+
+        # ------------------------------------------------------
+        # HIP CENTER
+        # ------------------------------------------------------
+
+        hip_x = (
+            left_hip.x +
+            right_hip.x
+        ) / 2
+
+        hip_y = (
+            left_hip.y +
+            right_hip.y
+        ) / 2
+
+        # ------------------------------------------------------
+        # DIFFERENCES
+        # ------------------------------------------------------
+
+        vertical_difference = abs(
+            hip_y -
+            shoulder_y
+        )
+
+        horizontal_difference = abs(
+            hip_x -
+            shoulder_x
+        )
+
+        if vertical_difference <= 0:
+            return False
+
+        # ------------------------------------------------------
+        # FALL CONDITION
+        # ------------------------------------------------------
+
+        return (
+            horizontal_difference >
+            vertical_difference * 1.5
+        )
+
 
     # ==========================================================
     # PROCESS FRAME
@@ -426,11 +525,17 @@ class YOLODetector:
             return frame, {
 
                 "worker": False,
+
                 "danger": False,
+
                 "fall": False,
+
                 "hand_danger": False,
+
                 "body_danger": False,
+
                 "status": "OFFLINE",
+
                 "pose_landmarks": None
             }
 
@@ -445,27 +550,20 @@ class YOLODetector:
         self.body_in_danger = False
 
         # ======================================================
-        # FLIP FRAME
+        # DO NOT FLIP HERE
         # ======================================================
-
-        frame = cv2.flip(
-            frame,
-            1
-        )
+        #
+        # The video frame should be used exactly as supplied.
+        #
+        # This prevents the danger-zone coordinates from moving
+        # to the opposite side.
+        #
+        # ======================================================
 
         height, width = frame.shape[:2]
 
         # ======================================================
-        # DANGER ZONE
-        # ======================================================
-
-        danger_zone = self.get_danger_zone(
-            width,
-            height
-        )
-
-        # ======================================================
-        # RGB FRAME FOR MEDIAPIPE
+        # RGB
         # ======================================================
 
         rgb = cv2.cvtColor(
@@ -474,7 +572,7 @@ class YOLODetector:
         )
 
         # ======================================================
-        # MEDIAPIPE POSE FIRST
+        # MEDIAPIPE POSE
         # ======================================================
 
         pose_result = self.pose.process(
@@ -499,25 +597,20 @@ class YOLODetector:
 
             source=frame,
 
-            # Slightly higher confidence helps reduce
-            # false person detections.
-
-            conf=0.60,
+            conf=0.70,
 
             iou=0.45,
-
-            # COCO CLASS 0 = PERSON
 
             classes=[0],
 
             verbose=False
         )
 
-        # ======================================================
-        # COLLECT PERSONS
-        # ======================================================
-
         persons = []
+
+        # ======================================================
+        # READ YOLO BOXES
+        # ======================================================
 
         for result in results:
 
@@ -535,17 +628,13 @@ class YOLODetector:
                 )
 
                 # ------------------------------------------------
-                # ONLY PERSON CLASS
+                # ONLY COCO PERSON CLASS
                 # ------------------------------------------------
 
                 if class_id != 0:
                     continue
 
-                # ------------------------------------------------
-                # CONFIDENCE
-                # ------------------------------------------------
-
-                if confidence < 0.60:
+                if confidence < 0.70:
                     continue
 
                 bx1, by1, bx2, by2 = map(
@@ -554,7 +643,7 @@ class YOLODetector:
                 )
 
                 # ------------------------------------------------
-                # CLAMP COORDINATES
+                # CLAMP TO FRAME
                 # ------------------------------------------------
 
                 bx1 = max(
@@ -598,34 +687,31 @@ class YOLODetector:
                 candidate = {
 
                     "x1": bx1,
+
                     "y1": by1,
+
                     "x2": bx2,
+
                     "y2": by2,
-                    "confidence": confidence
+
+                    "confidence":
+                        confidence
                 }
 
-                # ==================================================
-                # HUMAN POSE VALIDATION
-                # ==================================================
-                #
-                # This rejects the robot detection in your image
-                # when there are not enough human landmarks.
-                #
-                # ==================================================
+                # ------------------------------------------------
+                # PERSON VALIDATION
+                # ------------------------------------------------
 
-                if not self.is_real_person(
-                    candidate,
-                    pose_landmarks,
-                    width,
-                    height
-                ):
+                if pose_landmarks is not None:
 
-                    print(
-                        "False person detection rejected:",
-                        confidence
-                    )
+                    if not self.is_real_person(
+                        candidate,
+                        pose_landmarks,
+                        width,
+                        height
+                    ):
 
-                    continue
+                        continue
 
                 persons.append(
                     candidate
@@ -640,7 +726,7 @@ class YOLODetector:
         )
 
         # ======================================================
-        # WORKER FOUND
+        # WORKER DETECTED
         # ======================================================
 
         if len(persons) > 0:
@@ -648,13 +734,34 @@ class YOLODetector:
             self.worker_detected = True
 
         # ======================================================
-        # PROCESS EACH REAL PERSON
+        # FALL DETECTION
+        #
+        # VIDEO 1 ONLY
+        # ======================================================
+
+        if (
+            self.video_mode == "video1"
+            and
+            pose_landmarks is not None
+        ):
+
+            self.fall_detected = (
+                self.detect_fall(
+                    pose_landmarks
+                )
+            )
+
+        # ======================================================
+        # VIDEO 2 DANGER ZONE
+        #
+        # ONLY VIDEO 2
         # ======================================================
 
         for person in persons:
 
             bx1 = person["x1"]
             by1 = person["y1"]
+
             bx2 = person["x2"]
             by2 = person["y2"]
 
@@ -670,19 +777,35 @@ class YOLODetector:
                 (bx1 + bx2) / 2
             )
 
-            foot_y = by2
-
-            # --------------------------------------------------
-            # DANGER ZONE CHECK
-            # --------------------------------------------------
-
-            person_in_danger = (
-                self.point_inside_zone(
-                    foot_x,
-                    foot_y,
-                    danger_zone
-                )
+            foot_y = int(
+                by2
             )
+
+            # --------------------------------------------------
+            # DEFAULT
+            # --------------------------------------------------
+
+            person_in_danger = False
+
+            # --------------------------------------------------
+            # VIDEO 2 ONLY
+            # --------------------------------------------------
+
+            if (
+                self.video_mode == "video2"
+                and
+                self.enable_danger_zone
+            ):
+
+                person_in_danger = (
+                    check_person_in_danger_zone(
+                        bx1,
+                        by1,
+                        bx2,
+                        by2,
+                        frame
+                    )
+                )
 
             # ==================================================
             # DANGER
@@ -705,72 +828,24 @@ class YOLODetector:
                     f"{confidence:.2f}"
                 )
 
-                # ------------------------------------------------
-                # DANGER ZONE BORDER
-                # ------------------------------------------------
+            # ==================================================
+            # FALL
+            # ==================================================
 
-                x1, y1, x2, y2 = (
-                    danger_zone
+            elif (
+                self.video_mode == "video1"
+                and
+                self.fall_detected
+            ):
+
+                box_color = (
+                    0,
+                    0,
+                    255
                 )
 
-                cv2.rectangle(
-
-                    frame,
-
-                    (x1, y1),
-
-                    (x2, y2),
-
-                    (0, 0, 255),
-
-                    3
-                )
-
-                # ------------------------------------------------
-                # DANGER ZONE LABEL
-                # ------------------------------------------------
-
-                cv2.putText(
-
-                    frame,
-
-                    "DANGER ZONE",
-
-                    (
-                        x1 + 10,
-                        max(
-                            30,
-                            y1 - 10
-                        )
-                    ),
-
-                    cv2.FONT_HERSHEY_SIMPLEX,
-
-                    0.65,
-
-                    (0, 0, 255),
-
-                    2
-                )
-
-                # ------------------------------------------------
-                # FOOT POINT
-                # ------------------------------------------------
-
-                cv2.circle(
-
-                    frame,
-
-                    (
-                        foot_x,
-                        foot_y
-                    ),
-
-                    7,
-
-                    (0, 0, 255),
-
-                    -1
+                label = (
+                    "FALL DETECTED"
                 )
 
             # ==================================================
@@ -790,39 +865,17 @@ class YOLODetector:
                     f"{confidence:.2f}"
                 )
 
-                cv2.circle(
-
-                    frame,
-
-                    (
-                        foot_x,
-                        foot_y
-                    ),
-
-                    6,
-
-                    (0, 255, 0),
-
-                    -1
-                )
-
             # ==================================================
-            # PERSON BOX
+            # DRAW PERSON BOX
             # ==================================================
 
             cv2.rectangle(
 
                 frame,
 
-                (
-                    bx1,
-                    by1
-                ),
+                (bx1, by1),
 
-                (
-                    bx2,
-                    by2
-                ),
+                (bx2, by2),
 
                 box_color,
 
@@ -856,6 +909,26 @@ class YOLODetector:
                 2
             )
 
+            # ==================================================
+            # FOOT POINT
+            # ==================================================
+
+            cv2.circle(
+
+                frame,
+
+                (
+                    foot_x,
+                    foot_y
+                ),
+
+                6,
+
+                box_color,
+
+                -1
+            )
+
         # ======================================================
         # DRAW POSE
         # ======================================================
@@ -871,163 +944,36 @@ class YOLODetector:
                 self.mp_pose.POSE_CONNECTIONS
             )
 
-            # ==================================================
-            # FALL DETECTION
-            # ==================================================
+        # ======================================================
+        # DRAW VIDEO 2 DANGER ZONE
+        #
+        # ONLY WHEN WORKER ENTERS
+        # ======================================================
 
-            landmarks = (
-                pose_result
-                .pose_landmarks
-                .landmark
+        if (
+            self.video_mode == "video2"
+            and
+            self.enable_danger_zone
+            and
+            self.danger_detected
+        ):
+
+            frame = draw_danger_zone(
+
+                frame,
+
+                violation=True
             )
-
-            left_shoulder = landmarks[
-                self.mp_pose.PoseLandmark.LEFT_SHOULDER
-            ]
-
-            right_shoulder = landmarks[
-                self.mp_pose.PoseLandmark.RIGHT_SHOULDER
-            ]
-
-            left_hip = landmarks[
-                self.mp_pose.PoseLandmark.LEFT_HIP
-            ]
-
-            right_hip = landmarks[
-                self.mp_pose.PoseLandmark.RIGHT_HIP
-            ]
-
-            if (
-
-                left_shoulder.visibility > 0.4
-
-                and
-
-                right_shoulder.visibility > 0.4
-
-                and
-
-                left_hip.visibility > 0.4
-
-                and
-
-                right_hip.visibility > 0.4
-
-            ):
-
-                shoulder_y = (
-
-                    left_shoulder.y
-                    +
-                    right_shoulder.y
-
-                ) / 2
-
-                hip_y = (
-
-                    left_hip.y
-                    +
-                    right_hip.y
-
-                ) / 2
-
-                shoulder_x = (
-
-                    left_shoulder.x
-                    +
-                    right_shoulder.x
-
-                ) / 2
-
-                hip_x = (
-
-                    left_hip.x
-                    +
-                    right_hip.x
-
-                ) / 2
-
-                vertical_difference = abs(
-
-                    hip_y
-                    -
-                    shoulder_y
-                )
-
-                horizontal_difference = abs(
-
-                    hip_x
-                    -
-                    shoulder_x
-                )
-
-                if (
-
-                    horizontal_difference
-                    >
-                    vertical_difference * 1.5
-
-                ):
-
-                    self.fall_detected = True
-
-        # ======================================================
-        # HAND DETECTION
-        # ======================================================
-
-        hand_result = self.hands.process(
-            rgb
-        )
-
-        if hand_result.multi_hand_landmarks:
-
-            for hand_landmarks in (
-                hand_result.multi_hand_landmarks
-            ):
-
-                self.mp_draw.draw_landmarks(
-
-                    frame,
-
-                    hand_landmarks,
-
-                    self.mp_hands.HAND_CONNECTIONS
-                )
-
-                # ----------------------------------------------
-                # CHECK HAND POINTS
-                # ----------------------------------------------
-
-                for landmark in (
-                    hand_landmarks.landmark
-                ):
-
-                    hx = int(
-                        landmark.x *
-                        width
-                    )
-
-                    hy = int(
-                        landmark.y *
-                        height
-                    )
-
-                    if self.point_inside_zone(
-
-                        hx,
-                        hy,
-                        danger_zone
-                    ):
-
-                        self.hand_in_danger = True
-
-                        self.danger_detected = True
 
         # ======================================================
         # STATUS
         # ======================================================
 
-        if self.fall_detected:
+        if (
+            self.video_mode == "video1"
+            and
+            self.fall_detected
+        ):
 
             status = (
                 "FALL DETECTED"
@@ -1039,7 +985,11 @@ class YOLODetector:
                 255
             )
 
-        elif self.danger_detected:
+        elif (
+            self.video_mode == "video2"
+            and
+            self.danger_detected
+        ):
 
             status = (
                 "DANGER ZONE VIOLATION"
@@ -1072,7 +1022,7 @@ class YOLODetector:
             )
 
         # ======================================================
-        # STATUS TEXT
+        # STATUS DISPLAY
         # ======================================================
 
         cv2.putText(
@@ -1096,10 +1046,14 @@ class YOLODetector:
         )
 
         # ======================================================
-        # ALERT TEXT
+        # ALERT DISPLAY
         # ======================================================
 
-        if self.fall_detected:
+        if (
+            self.video_mode == "video1"
+            and
+            self.fall_detected
+        ):
 
             cv2.putText(
 
@@ -1116,34 +1070,20 @@ class YOLODetector:
 
                 0.8,
 
-                (0, 0, 255),
-
-                3
-            )
-
-        elif self.hand_in_danger:
-
-            cv2.putText(
-
-                frame,
-
-                "HAND IN DANGER ZONE",
-
                 (
-                    25,
-                    85
+                    0,
+                    0,
+                    255
                 ),
 
-                cv2.FONT_HERSHEY_SIMPLEX,
-
-                0.8,
-
-                (0, 0, 255),
-
                 3
             )
 
-        elif self.body_in_danger:
+        elif (
+            self.video_mode == "video2"
+            and
+            self.body_in_danger
+        ):
 
             cv2.putText(
 
@@ -1160,7 +1100,11 @@ class YOLODetector:
 
                 0.8,
 
-                (0, 0, 255),
+                (
+                    0,
+                    0,
+                    255
+                ),
 
                 3
             )
@@ -1193,6 +1137,7 @@ class YOLODetector:
                 pose_landmarks
         }
 
+
     # ==========================================================
     # RELEASE
     # ==========================================================
@@ -1201,8 +1146,26 @@ class YOLODetector:
 
         if self.pose is not None:
 
-            self.pose.close()
+            try:
+
+                self.pose.close()
+
+            except Exception:
+                pass
+
+            self.pose = None
 
         if self.hands is not None:
 
-            self.hands.close()
+            try:
+
+                self.hands.close()
+
+            except Exception:
+                pass
+
+            self.hands = None
+
+        print(
+            "YOLO detector released."
+        )

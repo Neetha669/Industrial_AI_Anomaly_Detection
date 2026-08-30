@@ -1,5 +1,1253 @@
 [
     {
+        "date": "30-08-2026",
+        "time": "03:22:42 PM",
+        "type": "FALL",
+        "description": "Worker fall detected",
+        "source": "Fall Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "03:22:29 PM",
+        "type": "ANOMALY",
+        "description": "Industrial anomaly detected",
+        "source": "Isolation Forest Anomaly Detection",
+        "status": "WARNING"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "03:12:06 PM",
+        "type": "FALL",
+        "description": "Worker fall detected",
+        "source": "Fall Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "03:11:55 PM",
+        "type": "ANOMALY",
+        "description": "Industrial anomaly detected",
+        "source": "Isolation Forest Anomaly Detection",
+        "status": "WARNING"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "03:04:30 PM",
+        "type": "FALL",
+        "description": "Worker fall detected",
+        "source": "Fall Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "03:04:18 PM",
+        "type": "ANOMALY",
+        "description": "Industrial anomaly detected",
+        "source": "Isolation Forest Anomaly Detection",
+        "status": "WARNING"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "02:52:58 PM",
+        "type": "FALL",
+        "description": "Worker fall detected",
+        "source": "Fall Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "02:52:47 PM",
+        "type": "ANOMALY",
+        "description": "Industrial anomaly detected",
+        "source": "Isolation Forest Anomaly Detection",
+        "status": "WARNING"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "02:03:00 PM",
+        "type": "FALL",
+        "description": "Worker fall detected",
+        "source": "Fall Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "02:02:49 PM",
+        "type": "ANOMALY",
+        "description": "Industrial anomaly detected",
+        "source": "Isolation Forest Anomaly Detection",
+        "status": "WARNING"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "01:59:09 PM",
+        "type": "FALL",
+        "description": "Worker fall detected",
+        "source": "Fall Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "01:59:06 PM",
+        "type": "FALL",
+        "description": "Worker fall detected",
+        "source": "Fall Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "01:59:03 PM",
+        "type": "FALL",
+        "description": "Worker fall detected",
+        "source": "Fall Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "01:58:49 PM",
+        "type": "ANOMALY",
+        "description": "Industrial anomaly detected",
+        "source": "Isolation Forest Anomaly Detection",
+        "status": "WARNING"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:57:32 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:57:29 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:57:16 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:57:03 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:57:00 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:56:17 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:56:14 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:56:02 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:55:48 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:55:46 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:55:03 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:55:01 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:52:50 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:52:38 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:52:36 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:51:55 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:51:53 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:51:42 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:51:30 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:51:28 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:49:44 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:49:41 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:49:28 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:49:16 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:49:13 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:48:31 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:48:28 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:48:16 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:48:04 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:48:02 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:35:28 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:34:45 PM",
+        "type": "ANOMALY",
+        "description": "Industrial anomaly detected",
+        "source": "Isolation Forest Anomaly Detection",
+        "status": "WARNING"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:34:20 PM",
+        "type": "FALL",
+        "description": "Worker fall detected",
+        "source": "Fall Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "30-08-2026",
+        "time": "12:34:09 PM",
+        "type": "ANOMALY",
+        "description": "Industrial anomaly detected",
+        "source": "Isolation Forest Anomaly Detection",
+        "status": "WARNING"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:40:06 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:29:52 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:29:50 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:29:15 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:29:13 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:28:07 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:28:05 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:10:20 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:10:13 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:10:10 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:10:04 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:10:01 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:09:56 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:09:54 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:09:50 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:09:48 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:09:47 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:09:38 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:09:34 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:09:29 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:09:18 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:09:17 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:09:16 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:09:15 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:09:09 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:09:05 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:09:00 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:08:57 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:08:51 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:08:50 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:08:47 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:08:44 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:08:43 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:08:34 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:08:30 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:08:26 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:08:10 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:08:10 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:08:08 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:08:07 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:08:01 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:07:57 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:07:51 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:07:48 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:07:43 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:07:41 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:07:38 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:07:36 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:07:34 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:07:25 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:07:21 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:07:16 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:07:02 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:07:02 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:07:00 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:06:59 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:06:53 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:06:49 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:06:44 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:06:41 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:06:35 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:06:33 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:06:30 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:06:28 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:06:26 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:06:17 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:06:13 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "12:06:08 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "11:59:38 AM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "11:59:25 AM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "11:59:13 AM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "11:58:45 AM",
+        "type": "FALL",
+        "description": "Worker fall detected",
+        "source": "Fall Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "28-08-2026",
+        "time": "11:58:34 AM",
+        "type": "ANOMALY",
+        "description": "Industrial anomaly detected",
+        "source": "Isolation Forest Anomaly Detection",
+        "status": "WARNING"
+    },
+    {
+        "date": "27-08-2026",
+        "time": "03:59:45 PM",
+        "type": "FALL",
+        "description": "Worker fall detected",
+        "source": "Fall Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "27-08-2026",
+        "time": "03:59:32 PM",
+        "type": "ANOMALY",
+        "description": "Industrial anomaly detected",
+        "source": "Isolation Forest Anomaly Detection",
+        "status": "WARNING"
+    },
+    {
+        "date": "27-08-2026",
+        "time": "03:56:05 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "27-08-2026",
+        "time": "03:37:45 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "27-08-2026",
+        "time": "03:08:51 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "27-08-2026",
+        "time": "03:07:28 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "27-08-2026",
+        "time": "03:06:55 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "27-08-2026",
+        "time": "03:05:33 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "27-08-2026",
+        "time": "10:30:41 AM",
+        "type": "FALL",
+        "description": "Worker fall detected",
+        "source": "Fall Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "27-08-2026",
+        "time": "10:30:27 AM",
+        "type": "ANOMALY",
+        "description": "Industrial anomaly detected",
+        "source": "Isolation Forest Anomaly Detection",
+        "status": "WARNING"
+    },
+    {
+        "date": "27-08-2026",
+        "time": "10:30:26 AM",
+        "type": "ANOMALY",
+        "description": "Industrial anomaly detected",
+        "source": "Isolation Forest Anomaly Detection",
+        "status": "WARNING"
+    },
+    {
+        "date": "26-08-2026",
+        "time": "08:41:43 PM",
+        "type": "FALL",
+        "description": "Worker fall detected",
+        "source": "Fall Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "26-08-2026",
+        "time": "08:41:30 PM",
+        "type": "ANOMALY",
+        "description": "Industrial anomaly detected",
+        "source": "Isolation Forest Anomaly Detection",
+        "status": "WARNING"
+    },
+    {
+        "date": "26-08-2026",
+        "time": "08:41:29 PM",
+        "type": "ANOMALY",
+        "description": "Industrial anomaly detected",
+        "source": "Isolation Forest Anomaly Detection",
+        "status": "WARNING"
+    },
+    {
+        "date": "26-08-2026",
+        "time": "08:40:52 PM",
+        "type": "ANOMALY",
+        "description": "Industrial anomaly detected",
+        "source": "Isolation Forest Anomaly Detection",
+        "status": "WARNING"
+    },
+    {
+        "date": "26-08-2026",
+        "time": "08:40:20 PM",
+        "type": "FALL",
+        "description": "Worker fall detected",
+        "source": "Fall Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "26-08-2026",
+        "time": "08:40:07 PM",
+        "type": "ANOMALY",
+        "description": "Industrial anomaly detected",
+        "source": "Isolation Forest Anomaly Detection",
+        "status": "WARNING"
+    },
+    {
+        "date": "26-08-2026",
+        "time": "08:40:06 PM",
+        "type": "ANOMALY",
+        "description": "Industrial anomaly detected",
+        "source": "Isolation Forest Anomaly Detection",
+        "status": "WARNING"
+    },
+    {
+        "date": "26-08-2026",
+        "time": "02:34:03 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "26-08-2026",
+        "time": "02:22:46 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "26-08-2026",
+        "time": "02:17:10 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "26-08-2026",
+        "time": "02:13:12 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "26-08-2026",
+        "time": "02:10:23 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "26-08-2026",
+        "time": "02:10:14 PM",
+        "type": "FALL",
+        "description": "Worker fall detected",
+        "source": "Fall Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "26-08-2026",
+        "time": "02:10:12 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "26-08-2026",
+        "time": "02:10:00 PM",
+        "type": "ANOMALY",
+        "description": "Industrial anomaly detected",
+        "source": "Isolation Forest Anomaly Detection",
+        "status": "WARNING"
+    },
+    {
+        "date": "26-08-2026",
+        "time": "02:09:59 PM",
+        "type": "ANOMALY",
+        "description": "Industrial anomaly detected",
+        "source": "Isolation Forest Anomaly Detection",
+        "status": "WARNING"
+    },
+    {
+        "date": "26-08-2026",
+        "time": "02:09:20 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "26-08-2026",
+        "time": "02:07:35 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "26-08-2026",
+        "time": "02:07:30 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "26-08-2026",
+        "time": "02:07:21 PM",
+        "type": "FALL",
+        "description": "Worker fall detected",
+        "source": "Fall Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "26-08-2026",
+        "time": "02:07:19 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
+        "date": "26-08-2026",
+        "time": "02:07:07 PM",
+        "type": "ANOMALY",
+        "description": "Industrial anomaly detected",
+        "source": "Isolation Forest Anomaly Detection",
+        "status": "WARNING"
+    },
+    {
+        "date": "26-08-2026",
+        "time": "02:07:06 PM",
+        "type": "ANOMALY",
+        "description": "Industrial anomaly detected",
+        "source": "Isolation Forest Anomaly Detection",
+        "status": "WARNING"
+    },
+    {
+        "date": "26-08-2026",
+        "time": "02:06:28 PM",
+        "type": "DANGER ZONE",
+        "description": "Worker entered danger zone",
+        "source": "YOLOv8 + Danger Zone Detection",
+        "status": "CRITICAL"
+    },
+    {
         "date": "19-08-2026",
         "time": "02:20:43 PM",
         "type": "DANGER ZONE",

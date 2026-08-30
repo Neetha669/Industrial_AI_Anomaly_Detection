@@ -1,23 +1,39 @@
+# backend/danger_zone.py
+
 import cv2
 
 
 # ============================================================
-# PREDEFINED FLOOR DANGER ZONE
+# VIDEO 2 - INDUSTRIAL DANGER ZONE
+# ============================================================
+#
+# Rectangle placed on the RIGHT-SIDE FLOOR AREA.
+#
+# Normalized coordinates:
+# x1, y1 = top-left
+# x2, y2 = bottom-right
+#
+# 0.0 -> left/top
+# 1.0 -> right/bottom
 # ============================================================
 
 DANGER_ZONE = {
-    "x1": 0.42,
-    "y1": 0.60,
-    "x2": 0.72,
-    "y2": 0.92
+    "x1": 0.62,
+    "y1": 0.64,
+
+    "x2": 0.79,
+    "y2": 0.86
 }
 
 
 # ============================================================
-# GET PIXEL COORDINATES
+# GET DANGER ZONE PIXEL COORDINATES
 # ============================================================
 
 def get_danger_zone(frame):
+
+    if frame is None:
+        return 0, 0, 0, 0
 
     height, width = frame.shape[:2]
 
@@ -31,10 +47,17 @@ def get_danger_zone(frame):
 
 
 # ============================================================
-# POINT INSIDE DANGER ZONE
+# CHECK POINT INSIDE RECTANGULAR DANGER ZONE
 # ============================================================
 
-def point_inside_danger_zone(x, y, frame):
+def point_inside_danger_zone(
+    x,
+    y,
+    frame
+):
+
+    if frame is None:
+        return False
 
     x1, y1, x2, y2 = get_danger_zone(frame)
 
@@ -46,7 +69,13 @@ def point_inside_danger_zone(x, y, frame):
 
 
 # ============================================================
-# CHECK PERSON
+# CHECK PERSON INSIDE DANGER ZONE
+# ============================================================
+#
+# We check the bottom-center / foot point.
+#
+# This is important because the danger zone represents
+# the FLOOR area.
 # ============================================================
 
 def check_person_in_danger_zone(
@@ -57,6 +86,10 @@ def check_person_in_danger_zone(
     frame
 ):
 
+    if frame is None:
+        return False
+
+    # Bottom-center / foot point
     foot_x = int((x1 + x2) / 2)
     foot_y = int(y2)
 
@@ -68,7 +101,40 @@ def check_person_in_danger_zone(
 
 
 # ============================================================
+# VIDEO 2 COMPATIBILITY FUNCTION
+# ============================================================
+#
+# Your Live Monitoring code is currently trying to import:
+#
+# check_video2_person_in_danger_zone
+#
+# So we provide that function here.
+#
+# It uses the SAME danger-zone logic above.
+# ============================================================
+
+def check_video2_person_in_danger_zone(
+    x1,
+    y1,
+    x2,
+    y2,
+    frame
+):
+
+    return check_person_in_danger_zone(
+        x1,
+        y1,
+        x2,
+        y2,
+        frame
+    )
+
+
+# ============================================================
 # DRAW DANGER ZONE
+# ============================================================
+#
+# Rectangle is shown ONLY when violation=True.
 # ============================================================
 
 def draw_danger_zone(
@@ -76,14 +142,17 @@ def draw_danger_zone(
     violation=False
 ):
 
-    # Do NOT show zone when nobody is inside
+    if frame is None:
+        return frame
+
+    # Do not show zone when there is no violation
     if not violation:
         return frame
 
     x1, y1, x2, y2 = get_danger_zone(frame)
 
     # --------------------------------------------------------
-    # TRANSPARENT RED AREA
+    # TRANSPARENT RED RECTANGLE
     # --------------------------------------------------------
 
     overlay = frame.copy()
@@ -98,9 +167,9 @@ def draw_danger_zone(
 
     frame[:] = cv2.addWeighted(
         overlay,
-        0.15,
+        0.18,
         frame,
-        0.85,
+        0.82,
         0
     )
 
@@ -124,13 +193,13 @@ def draw_danger_zone(
         frame,
         "DANGER ZONE",
         (
-            x1 + 10,
+            x1 + 8,
             max(30, y1 - 10)
         ),
         cv2.FONT_HERSHEY_SIMPLEX,
-        0.8,
+        0.7,
         (0, 0, 255),
-        3
+        2
     )
 
     return frame

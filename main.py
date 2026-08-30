@@ -1,1 +1,11 @@
-print("AI-Based Real-Time Industrial Anomaly Detection Project")
+from frontend.login import LoginWindow
+import tkinter as tk
+
+
+if __name__ == "__main__":
+
+    root = tk.Tk()
+
+    app = LoginWindow(root)
+
+    root.mainloop()
